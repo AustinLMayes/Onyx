@@ -18,7 +18,7 @@ class Onyx::Cuelist
     column name: :options_data, default: nil
     column name: :chase_rate, default: 800
     column name: :chase_fade, default: 100
-    column name: :auto_release_mode, default: 0
+    column name: :auto_release_mode, default: 2500
     column name: :time_code_mode, default: nil
     column name: :programmer_overridable, default: 1
     column name: :priority_level, default: 50
@@ -55,7 +55,8 @@ class Onyx::Cuelist
     end
 
     def self.next_available_vis_id(client, start)
-        find_raw(client, "VisCueListID >= #{start}", order: "VisCueListID ASC").last.vis_cue_list_id + human_to_onyx_id(1)
+        res = find_raw(client, "VisCueListID >= #{start}", order: "VisCueListID ASC").last
+        res.nil? ? start : res.vis_cue_list_id + human_to_onyx_id(1)
     end
 
     def post_create(client)
