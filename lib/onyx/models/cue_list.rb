@@ -136,7 +136,8 @@ class Onyx::Cuelist
 
     def move_to_archive(client)
         id = Onyx::Cuelist.next_available_vis_id(client, Onyx::Cuelist.human_to_onyx_id(300))
-        vis_cue_list_id = id
+        self.vis_cue_list_id = id
+        info "Moving #{cue_list_name} to #{vis_cue_list_id}"
         save(client)
     end
     
