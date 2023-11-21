@@ -46,6 +46,10 @@ class Onyx::Cuelist
         find_one(client, cue_list_name: name)
     end
 
+    def pre_create(client)
+        self.cue_list_id = client.execute("SELECT NEXT VALUE FOR [dbo].[SeqCueListId]").first[""]
+    end
+
     def self.human_to_onyx_id(num)
         num * 10000
     end
