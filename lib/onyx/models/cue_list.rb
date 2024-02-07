@@ -58,8 +58,11 @@ class Onyx::Cuelist
         find_one(client, cue_list_id: id)
     end
 
-    def self.next_available_vis_id(client, start)
-        res = find_raw(client, "VisCueListID >= #{start}", order: "VisCueListID ASC").last
+    def self.next_available_vis_id(client, start, end_id = nil)
+        end_id = end_id || human_to_onyx_id(9999)
+        res = find_raw(client, "VisCueListID >= #{start} AND VisCueListID <= #{end_id}", order: "VisCueListID ASC").last
+        # Make sure nothing is at the end
+        raise "No more available cue lists" if !res.nil? && res.vis_cue_list_id == end_id
         res.nil? ? start : res.vis_cue_list_id + human_to_onyx_id(1)
     end
 
