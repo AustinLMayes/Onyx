@@ -41,6 +41,7 @@ class Onyx::Cuelist
     column name: :ms_cout_mode, default: nil
     column name: :cuelist_appearance, default: nil
     column name: :flash_data, default: nil
+    column name: :sound_trig, default: nil
 
     def self.from_name(client, name)
         find_one(client, cue_list_name: name)
